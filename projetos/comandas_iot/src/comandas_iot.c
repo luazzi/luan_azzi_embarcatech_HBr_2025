@@ -14,9 +14,9 @@
 #include "inc/ssd1306_font.h"
 
 // Definições de constantes e configurações
-#define WIFI_SSID "Redmi Note 10"               // Nome da rede Wi-Fi
-#define WIFI_PASSWORD "12345678"       // Senha da rede Wi-Fi
-#define TEST_TCP_SERVER_IP "192.168.155.186"      // Endereço IP do servidor TCP
+#define WIFI_SSID "WIFI_NAME"               // Nome da rede Wi-Fi
+#define WIFI_PASSWORD "WIFI_PASSWORD"       // Senha da rede Wi-Fi
+#define TEST_TCP_SERVER_IP "192.168.XXX.XXX"      // Endereço IP do servidor TCP
 #define TCP_PORT 10                         // Porta TCP para conexão (e número da comanda)
 #define DEBUG_printf printf                 // Macro para facilitar o debug
 #define BUF_SIZE 2048                       // Tamanho do buffer para recebimento de dados
