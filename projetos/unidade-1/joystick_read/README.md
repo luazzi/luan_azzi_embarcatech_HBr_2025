@@ -24,7 +24,7 @@ Durante os testes iniciais, observou-se que o joystick apresentava imprecisão n
   
 ### Solução implementada:
 Foi introduzido um algoritmo de deadzone que:
-1. Considera qualquer valor entre (CENTRO ± DEADZONE_SIZE) como posição central
+1. Considera qualquer valor entre (CENTRO ± DEADZONE_RANGE) como posição central
 2. Mapeia estes valores para exatamente 2048 (valor central ideal)
 3. Mantém a resposta linear fora da zona morta
 
