@@ -6,22 +6,22 @@
 #include "hardware/i2c.h"
 #include "inc/ssd1306.h"
 
-// === Configurações ===
-#define JOYSTICK_Y_ADC_PIN 26  // ADC0 (GPIO26) - Eixo Y
-#define JOYSTICK_X_ADC_PIN 27  // ADC1 (GPIO27) - Eixo X
+// Configurações
+#define JOYSTICK_Y_ADC_PIN 26  // Eixo Y
+#define JOYSTICK_X_ADC_PIN 27  // Eixo X
 #define I2C_SDA 14
 #define I2C_SCL 15
 #define DEADZONE_CENTER 2048
-#define DEADZONE_RANGE 200
+#define DEADZONE_RANGE 200 // Deadzone para evitar variação no joystick parado
 
-// === Inicializa ADC ===
+// Inicializa ADC
 void init_adc() {
     adc_init();
     adc_gpio_init(JOYSTICK_X_ADC_PIN);
     adc_gpio_init(JOYSTICK_Y_ADC_PIN);
 }
 
-// Lê canal ADC especificado ===
+// Lê canal ADC
 uint16_t read_adc(uint channel) {
     adc_select_input(channel);
     return adc_read();
@@ -36,7 +36,7 @@ uint16_t apply_deadzone(uint16_t raw_val) {
     return raw_val;
 }
 
-// === Atualiza display OLED ===
+// Atualiza display OLED
 void atualizar_display(uint8_t *buffer, struct render_area *area, uint16_t x_val, uint16_t y_val) {
     char linha1[32], linha2[32];
 
@@ -52,7 +52,7 @@ void atualizar_display(uint8_t *buffer, struct render_area *area, uint16_t x_val
     render_on_display(buffer, area);
 }
 
-// === Função principal ===
+// Função principal
 int main() {
     stdio_init_all();
     init_adc();
@@ -81,10 +81,10 @@ int main() {
     render_on_display(buffer, &area);
     sleep_ms(500);
 
-    // === Loop principal ===
+    // Loop principal
     while (true) {
-        uint16_t raw_x = read_adc(1); // X no canal 1 (GPIO27)
-        uint16_t raw_y = read_adc(0); // Y no canal 0 (GPIO26)
+        uint16_t raw_x = read_adc(1); // X 
+        uint16_t raw_y = read_adc(0); // Y
 
         uint16_t filtered_x = apply_deadzone(raw_x);
         uint16_t filtered_y = apply_deadzone(raw_y);
