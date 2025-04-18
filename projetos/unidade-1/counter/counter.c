@@ -11,13 +11,14 @@
 #define BUTTON_B_PIN 6
 #define I2C_SDA      14
 #define I2C_SCL      15
-
+#define DEBOUNCE_DELAY_MS 100
 // Variáveis globais
 volatile int contador = 0;
 volatile int cliques_botao_b = 0;
 volatile bool contagem_ativa = false;
 volatile bool atualizar_display_necessario = false;
 volatile absolute_time_t proximo_tick;
+
 
 // Inicialização dos botões
 void init_button(uint pin) {
@@ -28,6 +29,7 @@ void init_button(uint pin) {
 
 // Callback de interrupção dos botões
 void button_callback(uint gpio, uint32_t events) {
+
     if (gpio == BUTTON_A_PIN) {
         contador = 9;
         cliques_botao_b = 0;

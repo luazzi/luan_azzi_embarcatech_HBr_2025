@@ -41,10 +41,37 @@ Somente ao pressionar novamente o Botão A, o processo todo se reinicia:
 ### Bounce dos Botões
 Durante os testes, observou-se que os botões físicos apresentam bounce (múltiplas transições rápidas) quando pressionados, causando registros múltiplos em um mesmo clique. Para resolver esse problema, é possível usar um mecanismo de debounce, como uma lógica de temporização para ignorar transições muito rápidas.
 
-Observações: essa mudança não foi implementada no código, mas pode ser implementada adicionado o comando
+Observações: essa mudança não foi implementada no código, mas pode ser implementada adicionando duas variáveis:
 
 ```c
-    sleep_ms(DEBOUNCE_DELAY_MS);
+volatile absolute_time_t ultimo_botao_a = 0;
+volatile absolute_time_t ultimo_botao_b = 0;
 ```
 
-no início da função de interrupção dos botões.
+E substituindo a função de callback por:
+
+```c
+void button_callback(uint gpio, uint32_t events) {
+    absolute_time_t now = get_absolute_time();
+    
+    if (gpio == BUTTON_A_PIN) {
+        if (absolute_time_diff_us(ultimo_botao_a, now) > DEBOUNCE_DELAY_MS * 1000) {
+            contador = 9;
+            cliques_botao_b = 0;
+            contagem_ativa = true;
+            atualizar_display_necessario = true;
+            proximo_tick = make_timeout_time_ms(1000);
+            ultimo_botao_a = now;
+        }
+    } else if (gpio == BUTTON_B_PIN) {
+        if (absolute_time_diff_us(ultimo_botao_b, now) > DEBOUNCE_DELAY_MS * 1000) {
+            if (contagem_ativa && contador > 0) {
+                cliques_botao_b++;
+                atualizar_display_necessario = true;
+            }
+            ultimo_botao_b = now;
+        }
+    }
+}
+
+```
