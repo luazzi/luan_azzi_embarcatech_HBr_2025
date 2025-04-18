@@ -6,27 +6,27 @@
 #include "hardware/i2c.h"
 #include "inc/ssd1306.h"
 
-// === Configurações ===
+// Configurações
 #define BUTTON_A_PIN 5
 #define BUTTON_B_PIN 6
 #define I2C_SDA      14
 #define I2C_SCL      15
 
-// === Variáveis globais ===
+// Variáveis globais
 volatile int contador = 0;
 volatile int cliques_botao_b = 0;
 volatile bool contagem_ativa = false;
 volatile bool atualizar_display_necessario = false;
 volatile absolute_time_t proximo_tick;
 
-// === Inicialização dos botões com pull-up ===
+// Inicialização dos botões
 void init_button(uint pin) {
     gpio_init(pin);
     gpio_set_dir(pin, GPIO_IN);
     gpio_pull_up(pin);
 }
 
-// === Callback de interrupção dos botões ===
+// Callback de interrupção dos botões
 void button_callback(uint gpio, uint32_t events) {
     if (gpio == BUTTON_A_PIN) {
         contador = 9;
@@ -40,14 +40,14 @@ void button_callback(uint gpio, uint32_t events) {
     }
 }
 
-// === Atualiza o display OLED ===
+// Atualiza o display OLED 
 void atualizar_display(uint8_t *buffer, struct render_area *area) {
     char linha1[32], linha2[32];
 
     memset(buffer, 0, ssd1306_buffer_length);
 
     snprintf(linha1, sizeof(linha1), "Tempo: %d", contador);
-    snprintf(linha2, sizeof(linha2), "B cliques: %d", cliques_botao_b);
+    snprintf(linha2, sizeof(linha2), "Cliques: %d", cliques_botao_b);
 
     ssd1306_draw_string(buffer, 5, 0, linha1);
     ssd1306_draw_string(buffer, 5, 16, linha2);
@@ -55,7 +55,7 @@ void atualizar_display(uint8_t *buffer, struct render_area *area) {
     render_on_display(buffer, area);
 }
 
-// === Função principal ===
+// Função principal
 int main() {
     stdio_init_all();
 
@@ -92,7 +92,7 @@ int main() {
     atualizar_display(buffer, &area);
     proximo_tick = make_timeout_time_ms(1000);
 
-    // === Loop principal ===
+    // Loop principal
     while (true) {
         // Atualiza a cada segundo, se contagem ativa
         if (contagem_ativa && absolute_time_diff_us(get_absolute_time(), proximo_tick) <= 0) {
