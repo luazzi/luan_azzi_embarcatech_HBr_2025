@@ -11,7 +11,7 @@
 #define BUTTON_B_PIN 6
 #define I2C_SDA      14
 #define I2C_SCL      15
-#define DEBOUNCE_DELAY_MS 100
+
 // Variáveis globais
 volatile int contador = 0;
 volatile int cliques_botao_b = 0;
