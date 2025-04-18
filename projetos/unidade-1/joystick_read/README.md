@@ -1,4 +1,4 @@
-# Contador Decrescente com Registro de Eventos por Interrupção
+# Leitura dos Sinais Analógicos do Joystick
 Nesta tarefa, foi feito um código para ler os dados de posição do joystick da BitDogLab e mostrá-los no dispay OLED.
 
 ## Instruções da tarefa
