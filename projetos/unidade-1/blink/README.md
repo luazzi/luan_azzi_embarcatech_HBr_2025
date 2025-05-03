@@ -1,4 +1,4 @@
-# Teste Unitário da Função do Monitor de Temperatura Interna do MCU
+# Estruturação de código para arquitetura modular
 Nesta tarefa, foi reestruturado um código para utilizar a arquitetura modular.
 
 ## Instruções da tarefa
