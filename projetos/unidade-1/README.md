@@ -11,3 +11,7 @@ Estudar o uso de interrupções, como o bounce afeta o sinal emitido, o uso de A
 
 - `temperature_reader`: Leitor de temperatura interna do rp2040;
 
+- `blink`: Blink com arquitetura modular;
+
+- `unitary_test`: Teste unitário que verifica a função de conversão do leitor de temperatura interno do rp2040.
+
